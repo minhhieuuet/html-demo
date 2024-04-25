@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: log test
-      run: echo "Host address is ${{ secrets.HOST }}"
+      env:
+        HOST: ${{ secrets.HOST }}
+      run: echo "Host address is $HOST"
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
       with:
