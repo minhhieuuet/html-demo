@@ -1,22 +1,33 @@
-name: remote ssh command
-on: [push]
+on: push
+name: npm build, lint, test and publish
 jobs:
-
-  build:
-    name: Build
+  build-and-publish:
+    name: build and publish
     runs-on: ubuntu-latest
     steps:
-    - name: log test
-      env:
-        HOST: ${{ secrets.HOST }}
-      run: echo "Host address is $HOST"
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /home/nodev/html-demo
-          git pull
+      - uses: actions/checkout@master
+      - name: npm install
+        uses: actions/npm@master
+        with:
+          args: install
+      - name: npm test
+        uses: actions/npm@master
+        with:
+          args: run test
+      - name: npm lint
+        uses: actions/npm@master
+        with:
+          args: run lint
+      - name: docker build
+        uses: actions/docker/cli@master
+        with:
+          args: build -t minhhieuuet/github-action-example .
+      - name: docker login
+        uses: actions/docker/login@master
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      - name: docker push
+        uses: actions/docker/cli@master
+        with:
+          args: push minhhieuuet/github-action-example
