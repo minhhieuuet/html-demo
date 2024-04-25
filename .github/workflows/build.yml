@@ -67,3 +67,20 @@ jobs:
               echo "runing the docker image"
               echo "Testing the nodejs  app endpoints"
               echo ${{ steps.docker_build.outputs.digest }}
+  deploy_to_server:
+    name: Deploy to server
+    runs-on: ubuntu-latest
+    steps:
+    - name: log test
+      env:
+        HOST: ${{ secrets.HOST }}
+      run: echo "Host address is $HOST"
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          pwd
