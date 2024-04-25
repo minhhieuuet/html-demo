@@ -6,7 +6,7 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "npx tsx index.ts"
   }
 }

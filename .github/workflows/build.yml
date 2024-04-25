@@ -30,8 +30,8 @@ jobs:
       # install applicaion dependencies
       - name: Install dependencies
         run: |
-          npm install typescript -g
           npm install
+          npm install typescript -g
           npm ci 
       # build and test the apps     
       - name: build & test
