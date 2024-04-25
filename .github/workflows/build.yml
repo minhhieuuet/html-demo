@@ -84,4 +84,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          pwd
+          docker compose pull
+          docker compose up -d
