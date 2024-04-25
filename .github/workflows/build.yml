@@ -35,7 +35,6 @@ jobs:
       # build and test the apps     
       - name: build & test
         run: |
-          npm install typescript
           npm run build
   push_to_Docker_Hub:
       # The type of runner that the job will run on
