@@ -6,6 +6,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+    -name: log test
+      run: echo ${{ secrets.HOST }}
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.3
       with:
