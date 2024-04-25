@@ -1,12 +1,9 @@
-FROM node:10.16.0-alpine
-
-WORKDIR /source/github-action-example-node
-
-COPY package.json /source/github-action-example-node
-
-RUN cd /source/github-action-example-node && npm i --only=production
-
+FROM node:alpine
+WORKDIR /usr/app
+COPY package.json .
+RUN npm install \
+        && npm install typescript -g
 COPY . .
-
+RUN tsc
 EXPOSE 3000
-CMD ["sh", "-c", "node index.js"]
+CMD ["node", "./build/index.js"]
